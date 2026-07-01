@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>single page · design</title>
+  <!-- clean, modern, single‑page design -->
+  <style>
+    /* ----- reset & base ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #faf9f8;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.5;
+      color: #1e1e1e;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ----- layout container ----- */
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ----- header / nav ----- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #eae8e6;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1e1e1e, #4a4a4a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 450;
+      color: #2c2c2c;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #1e1e1e;
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: #000;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ----- hero section ----- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 800px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #3e3e3e;
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #1e1e1e;
+      color: #fff;
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #1e1e1e;
+      border: 1px solid #b0b0b0;
+    }
+
+    .btn-outline:hover {
+      background: #f0f0f0;
+      border-color: #1e1e1e;
+    }
+
+    .btn-primary:hover {
+      background: #333;
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ----- feature cards (3 columns) ----- */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin: 3.5rem 0 2rem;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      padding: 2rem 1.5rem;
+      border-radius: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0, 0, 0, 0.02);
+      border: 1px solid #f0efed;
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 36px -8px rgba(0, 0, 0, 0.06);
+      border-color: #e0dedc;
+    }
+
+    .feature-icon {
+      font-size: 2.6rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      color: #4a4a4a;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ----- quote / extra section ----- */
+    .quote-section {
+      margin: 3rem 0 1.5rem;
+      padding: 2.5rem 2rem;
+      background: #ffffff;
+      border-radius: 40px;
+      border: 1px solid #efedeb;
+      text-align: center;
+    }
+
+    .quote-section blockquote {
+      font-size: 1.5rem;
+      font-weight: 370;
+      letter-spacing: -0.01em;
+      color: #1e1e1e;
+      max-width: 700px;
+      margin: 0 auto 1rem;
+      line-height: 1.4;
+    }
+
+    .quote-section figcaption {
+      font-style: normal;
+      color: #6a6a6a;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ----- footer ----- */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #eae8e6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: #4f4f4f;
+      font-size: 0.95rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #4f4f4f;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: #000;
+    }
+
+    /* ----- small touches ----- */
+    .badge {
+      display: inline-block;
+      background: #ecebe9;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: #2b2b2b;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ----- responsive adjustments ----- */
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        padding: 1.5rem 0 2.5rem;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .btn-group {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .footer-links {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .quote-section blockquote {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* small extra — smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- header -->
+  <header class="header">
+    <span class="logo">⦿ single</span>
+    <div class="nav-links">
+      <a href="#">home</a>
+      <a href="#">work</a>
+      <a href="#">about</a>
+      <a href="#">contact</a>
+    </div>
+  </header>
+
+  <!-- main content -->
+  <main>
+
+    <!-- hero -->
+    <section class="hero">
+      <span class="badge">✦ clean · minimal</span>
+      <h1>single‑page design<br />that speaks</h1>
+      <p>
+        A quiet, balanced layout with crisp typography and subtle motion.
+        Built for clarity, readability, and a touch of elegance.
+      </p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary">explore</a>
+        <a href="#" class="btn btn-outline">see more</a>
+      </div>
+    </section>
+
+    <!-- feature cards -->
+    <div class="features">
+      <article class="feature-card">
+        <div class="feature-icon">◈</div>
+        <h3>structure</h3>
+        <p>Clean grid, generous spacing, and a clear visual hierarchy that guides the eye.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">✦</div>
+        <h3>contrast</h3>
+        <p>Soft backgrounds with bold text accents create a modern, approachable feel.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">⊹</div>
+        <h3>rhythm</h3>
+        <p>Consistent vertical rhythm and hover details add polish without clutter.</p>
+      </article>
+    </div>
+
+    <!-- quote / testimonial block -->
+    <div class="quote-section">
+      <blockquote>
+        “Design is not just what it looks like and feels like. Design is how it works.”
+      </blockquote>
+      <figcaption>— Steve Jobs · adapted</figcaption>
+    </div>
+
+  </main>
+
+  <!-- footer -->
+  <footer class="footer">
+    <span>© 2026 · single page</span>
+    <div class="footer-links">
+      <a href="#">twitter</a>
+      <a href="#">dribbble</a>
+      <a href="#">github</a>
+      <a href="#">rss</a>
+    </div>
+  </footer>
+
+</div>
+<!-- end .page -->
+</body>
+</html>
